@@ -27,5 +27,6 @@ df[stock_shift].plot(secondary_y=True, style='g', legend = True)
 
 
 file_name = SYMBL + '.png'
+#file_name = 'test.png'
 plt.savefig(file_name)
 plt.show()

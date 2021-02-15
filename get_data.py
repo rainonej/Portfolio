@@ -45,8 +45,9 @@ for key_word in key_words:
 	#pytrends = TrendReq(hl='en-US', tz=360)
 
 	file_name = key_word + '_searches_'+ str(start_year)[2:] + '-' + str(end_year)[2:]
+	file_name = "./pickles/" + file_name + ".pkl"
 
-	search_trend.to_pickle("./pickles/" + file_name + ".pkl")
+	search_trend.to_pickle(file_name)
 	
 
 
