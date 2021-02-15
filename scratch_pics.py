@@ -5,14 +5,16 @@ from pandas import DataFrame
 df = pd.DataFrame(np.random.randn(5, 4), columns=['A', 'B', 'C', 'D'])
 #plt.close("all")
 
-
+'''
 plt.figure()
 
 ax = df.plot(secondary_y = ['A', 'B'])
 ax.set_ylabel('C scale')
 ax.right_ax.set_ylabel('AB scale')
 plt.show()
+'''
 
+dfgraph = pd.read_pickle("./dfgraph.pkl")
 
 '''
 # Create some mock data
