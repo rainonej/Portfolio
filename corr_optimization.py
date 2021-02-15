@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
-from key_words import start_year, end_year, key_word
+from key_words import start_year, end_year, key_words
 
+large_data = pd.read_pickle("./large_data.pkl")
 
-
+'''
 df_full = pd.read_pickle("./df_full.pkl")
 df = df_full[[key_word, 'Open', 'Price_Change']]
 
@@ -41,3 +42,4 @@ stop_p_slice = 'Price_Change' + 'p' + str(stop_p_slice)
 corr2 = corr.loc[start_slice:stop_slice, start_p_slice:stop_p_slice]
 
 corr2.idxmax()
+'''

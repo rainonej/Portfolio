@@ -10,8 +10,10 @@ def new_words(words):
 
 	kw_blist = kw_list
 	q = pytrends.related_queries() 
+	print(q)
 	for i in q:
 		df = q[i]['top']
+		print(df.info())
 		filt = (df['value'] > 50 )
 		kw_blist += list(df.loc[filt,'query'])
 
