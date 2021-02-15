@@ -12,11 +12,11 @@ df = pd.read_pickle("./pickles/" + file_name + ".pkl")
 
 
 plt.figure()
-df.Ethereump3.plot( label = 'one')
+df.Ethereump3.plot(label = 'testefwef')
 temp = 'Open-25'
 #ax.set_ylabel('Google Searches')
 
-df[temp].plot(secondary_y=True, style='g')
+df['Open'].plot(secondary_y=True, style='g')
 '''
 df.
 ax = df.plot(secondary_y = ['Ethereum'])
@@ -24,4 +24,5 @@ ax.set_ylabel('Google Searches')
 ax.right_ax.set_ylabel('Stock Price')
 df.plot()
 '''
+#plt.savefig('foo.png')
 plt.show()
