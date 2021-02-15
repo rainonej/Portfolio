@@ -15,7 +15,7 @@ from key_words import key_words
 
 
 
-'''
+
 start_date = str(start_year) + '-01-01'
 end_date = str(end_year) + '-01-01'
 
@@ -29,15 +29,14 @@ pc = hist['Open'].pct_change()
 pc = pc.to_frame()
 pc = pc.rename(columns = {"Open":"Price_Change"})
 hist = pd.concat([hist, pc], axis=1)
+hist.to_pickle("./pickles/" + file_name + ".pkl")
 
-# add 'pickles/' to the front
-with open(file_name + '.pkl', 'wb') as f:
-	pickle.dump(hist, f)
-'''
 
 
 for key_word in key_words:
 
+	pass
+	'''
 	search_trend = getDailyData(key_word, start_year, end_year-1)
 	search_trend = search_trend.reset_index()
 	search_trend = search_trend.rename(columns={"date": "Date"})
@@ -48,7 +47,7 @@ for key_word in key_words:
 	file_name = key_word + '_searches_'+ str(start_year)[2:] + '-' + str(end_year)[2:]
 
 	search_trend.to_pickle("./" + file_name + ".pkl")
-
+	'''
 
 
 	'''
