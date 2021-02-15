@@ -1,6 +1,6 @@
 
-start_year = 2018
-end_year = 2019
+start_year = 2017
+end_year = 2021
 kw_list = ['Ethereum']
 SYMBL = 'ETH-USD'
 
