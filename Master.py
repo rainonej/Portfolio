@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from pytrendsdaily import getDailyData
 import yfinance as yf
 
-#### Set Key Words
+#### Set the Parameters and Search Terms 
 start_year = 2020
 end_year = 2021
 key_words = ['Dogecoin']
@@ -86,26 +86,18 @@ for key_word in key_words:
 			final_p = p_val
 			max_val = val
 
-	print('best correlation is ' + final_p + ' and ' + final_shift + ' at ' + str(max_val))
+	print('After optimizing, ' + SYMBL + ' price is most correlated to the number of "' + key_word + '" searches from ' + str(final_shift[5:]) + ' days previous.')
+	print('The correlation factor is ' + str(max_val))
+	#print('best correlation is ' + final_p + ' and ' + final_shift + ' at ' + str(max_val))
 
+	### Draw the Graph
 	df_graph = df_mod[[final_p, final_shift, 'Open']]
 	columns = {final_p: "'" + key_word + "'" + ' Searches', final_shift: 'Shifted ' + key_word + ' Price', 'Open': 'Original ' + key_word + ' Price'}
 	graph = df_graph.rename(columns = columns)
 
-	searches = key_word
-	stock_shift = 'Shifted Stock Price'
 	plt.figure()
 	graph[columns[final_p]].plot(legend = True, ylabel = 'Google Searches')
-	#temp = 'Open-25'
-	#ax.set_ylabel('Google Searches')
-
 	graph[columns[final_shift]].plot(secondary_y=True, style='g', legend = True)
-	#df.plot(secondary_y=True, style='g')
-
-
-	#file_name = SYMBL + '.png'
-	#file_name = 'test.png'
-	#plt.savefig(file_name)
 	plt.show()
 
 
