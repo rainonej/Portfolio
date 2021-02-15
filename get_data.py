@@ -9,36 +9,37 @@ from pytrends import dailydata
 from pytrendsdaily import getDailyData
 import yfinance as yf
 
+start_year = 2018
+end_year = 2019
+key_word = 'Ethereum'
 
-svi = getDailyData('Ethereum', 2018, 2018)
-svi = svi.reset_index()
-pytrends = TrendReq(hl='en-US', tz=360)
 
-start = '2018-01-01'
-end = '2018-12-30'
-kw = 'Ethereum'
-kw_list = [kw]
-pytrends.build_payload(kw_list, cat=0, timeframe= start + ' ' + end, geo='', gprop='')
-df = pytrends.interest_over_time()
-#df2 = pytrends.get_historical_interest(kw_list, year_start=2018, month_start=1, day_start=1, year_end=2019, month_end=1, day_end=1,  cat=0, geo='', gprop='', sleep=0)
-#filt = df2[]
+search_trend = getDailyData(key_word, start_year, end_year-1)
+search_trend = search_trend.reset_index()
 
-#df3 = dailydata.get_daily_data('cinema', 2019, 1, 2019, 10, verbose = False, geo = 'US')
 
-#print(df)
+#pytrends = TrendReq(hl='en-US', tz=360)
+
+start_date = str(start_year) + '-01-01'
+end_date = str(end_year) + '-01-01'
+
+
+
 msft = yf.Ticker("ETH-USD")
-hist = msft.history(start = start, end = end)
+hist = msft.history(start = start_date, end = end_date)
 hist = hist.reset_index()
-svi = svi.rename(columns={"date": "Date"})
+search_trend = search_trend.rename(columns={"date": "Date"})
 
-dfnew = pd.merge(hist, svi, how = 'inner')
-
-dfnew = dfnew[['Date', 'Open', 'Ethereum']]
+dfnew = pd.merge(hist, search_trend, how = 'inner')
 dfnew = dfnew.set_index('Date')
 pc = dfnew['Open'].pct_change()
 pc = pc.to_frame()
 pc = pc.rename(columns = {"Open":"Price_Change"})
 dfnew = pd.concat([dfnew, pc], axis=1)
+dfnew.to_pickle("./df_full.pkl")
+
+dfnew = dfnew[['Ethereum', 'Open', 'Price_Change']]
+
 print(dfnew.corr())
 
 dfgraph = dfnew.loc[:,['Open', 'Ethereum']]
