@@ -15,7 +15,6 @@ from key_words import key_words
 
 
 
-'''
 start_date = str(start_year) + '-01-01'
 end_date = str(end_year) + '-01-01'
 
@@ -30,7 +29,6 @@ pc = pc.to_frame()
 pc = pc.rename(columns = {"Open":"Price_Change"})
 hist = pd.concat([hist, pc], axis=1)
 hist.to_pickle("./pickles/" + file_name + ".pkl")
-'''
 
 
 for key_word in key_words:
