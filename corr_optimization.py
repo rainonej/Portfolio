@@ -39,7 +39,7 @@ stop_slice = oop + str(max_shift)
 #Raise the 
 #df_mod = df
 ser = df[key_word]
-start_p_slice = 5
+start_p_slice = 3
 stop_p_slice = 30
 for p in range(start_p_slice, stop_p_slice+1):
 	p = p/10
@@ -76,3 +76,7 @@ for i in range(n):
 print('best correlation is ' + final_p + ' and ' + final_shift + ' at ' + str(max_val))
 
 df_graph = df_mod[[final_p, final_shift, 'Open']]
+
+file_name = SYMBL + key_word + str(start_year)[2:] + '-' + str(end_year)[2:]
+
+df_graph.to_pickle("./pickles/" + file_name + ".pkl")
