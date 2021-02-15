@@ -2,16 +2,18 @@ import pandas as pd
 import numpy as np
 from key_words import start_year, end_year, key_words, SYMBL
 
-key_word = 'Ethereum'
+key_word = key_words[0]
 #Import Data
-search_data = pd.read_pickle("./large_data.pkl")
-key_words = search_data.keys()
+file_name = "./pickles/" + key_word + '_searches_' + str(start_year)[2:] + '-' + str(end_year)[2:] + ".pkl"
+search_data = pd.read_pickle(file_name)
+#key_words = search_data.keys()
 file_name = SYMBL + str(start_year)[2:] + '-' + str(end_year)[2:]
 stock_tick = pd.read_pickle("./pickles/" + file_name + ".pkl")
 
+df = search_data.join(stock_tick)
 
-df_full = search_data['Ethereum']
-df = df_full[['Open', 'Ethereum', 'Price_Change']]
+#df_full = search_data[key_word]
+df = df[['Open', key_word, 'Price_Change']]
 
 
 #Shift the stocks by up to 10 days. So that hopefully the search results predict the prices
