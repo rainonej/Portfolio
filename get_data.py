@@ -9,10 +9,12 @@ from pytrends import dailydata
 from pytrendsdaily import getDailyData
 import yfinance as yf
 
+from key_words import start_year, end_year, key_word
+'''
 start_year = 2018
 end_year = 2019
 key_word = 'Ethereum'
-
+'''
 
 search_trend = getDailyData(key_word, start_year, end_year-1)
 search_trend = search_trend.reset_index()
