@@ -1,16 +1,16 @@
 # Crypto Correlations
 
-## Using Google Trends data to predict jumps in the prices of cryptocurrencies
+## Question: How strong is the correlation between the Google searches of last week and the stock prices of today?
 
-### How strong is the correlation between google searches of last week and the stock price of today?
+### Goal/Deliverables
+Users will be able to enter a cryptocurrency symbl and optional search words. The program will then suggest additional search words. A graph will be displayed relating the price of the cryptocurrency and each search word, along with displaying a calculated correlation factor. The program will also calculate the expected number of days that spikes in Google search results for these search words will effect the market.
 
-#### What is the method?
+### Method
 
-Once the Google trends data is obtained, it is compared to the stock price (and the percent daily change of the stock price) to calculate the correlation. Then we preform two transforms to the google trends data. The first is raising it to the p^th power, where p is a value between (1/4, and 4). The second is shifting the data back between 1 and 30 days. We optimize these values to obtain the strongest correlation to stock price. 
+Use API's to obtain Google Trends data and cryptocurrency price data. We preform a phaseshift on the cryptocurrency price data (shifting it by a number of days between 1 and 30). We also preform a non-linear transformation on the Google Trends data (we raise the number of results to the power of p, where p is between .25 and 4.0). 
+The value of the phaseshift and the p-power are optimized to maximize the correlation. We don't have to worry about over-fitting the data since we are reducing an object that has hundreds of dimensions by only two.  
 
-
-
-Why Cryptocurrency?
+### Why Cryptocurrency?
 The methods used here easily extend to anything publicly traded such as stock or commodities. However this method works especially well on cryptocurencies for a number of reasons.
 
 1. Cryptocurrencies are usually not reflecting the value of a company or a country. Their value is based solely on the market. This means there are few hidden variables that control the price of the currency.
