@@ -2,7 +2,40 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas import DataFrame
-df = pd.DataFrame(np.random.randn(5, 4), columns=['A', 'B', 'C', 'D'])
+
+price7 = pd.read_pickle("pickles/LTC-USD_price_2017.pkl")
+price8 = pd.read_pickle("pickles/LTC-USD_price_2018.pkl")
+price9 = pd.read_pickle("pickles/LTC-USD_price_2019.pkl")
+
+frames = [price7, price8, price9]
+price = pd.concat(frames)
+priceroll = price.rolling(1).sum()
+priceroll = priceroll.rename(columns = {'Open':'RA7'})
+s = priceroll['RA7']
+price = pd.concat([price, s], axis = 1)
+price = price.loc[:,['RA7', 'Open']]
+
+searches7 = pd.read_pickle("pickles/litecoin_searches_2017.pkl")
+searches8 = pd.read_pickle("pickles/litecoin_searches_2018.pkl")
+searches9 = pd.read_pickle("pickles/litecoin_searches_2019.pkl")
+frames = [searches7, searches8, searches9]
+searches = pd.concat(frames)
+
+searchesroll = searches.rolling(1).sum()
+searchesroll = searchesroll.rename(columns = {'litecoin': 'RA7 search'})
+searches = pd.concat([searches, searchesroll['RA7 search']], axis = 1)
+plt.figure(figsize = (10,5))
+#searches.plot(ylabel = 'Google Searches')
+searches['RA7 search'].plot(legend = True, ylabel = 'Google Searches')
+#price.plot(secondary_y = True)
+price['RA7'].plot(secondary_y=True, style='r', legend = True)
+#priceroll['Open'].plot(secondary_y=True, style='g', legend = True)
+
+#price['Open'].plot(legend = True, ylabel = 'Price')
+#searches['litecoin_unscaled'].plot(secondary_y=True, style='g', legend = True)
+plt.show()
+
+#df = pd.DataFrame(np.random.randn(5, 4), columns=['A', 'B', 'C', 'D'])
 #plt.close("all")
 
 '''
@@ -14,7 +47,7 @@ ax.right_ax.set_ylabel('AB scale')
 plt.show()
 '''
 
-dfgraph = pd.read_pickle("./dfgraph.pkl")
+#dfgraph = pd.read_pickle("./dfgraph.pkl")
 
 '''
 # Create some mock data
