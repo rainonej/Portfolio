@@ -3,6 +3,9 @@ from pytrendsdaily import getDailyData
 from os import path
 from key_words import key_words, start_year, end_year
 
+print('key words = ')
+print(key_words)
+
 for key in key_words:
 	for year in range(start_year, end_year+1):
 		filename = key + '_searches_' + str(year) + '.pkl'
