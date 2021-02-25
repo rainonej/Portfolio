@@ -1,9 +1,10 @@
 
-start_year = 2020
-end_year = 2021
+start_year = 2017
+end_year = 2020
 kw_list = ['Dogecoin']
 SYMBL = 'DOGE-USD'
-key_words = ['Dogecoin']
+#key_words = ['Dogecoin', 'Ethereum', 'crypto market']
+key_words = ['bitcoin', 'ETH-USD', 'Ethereum', 'bitcoin ethereum', 'btc-usd', 'ethereum price', 'litecoin', 'LTC-USD']
 
 
 from get_suggestions import new_words

@@ -6,6 +6,7 @@ pytrends = TrendReq(hl='en-US', tz=360)
 kw_list = ["ETH-USD", "Ethereum"]
 
 def new_words(words):
+	# input words: [str1, str2, ...]	
 	pytrends.build_payload(words, cat=0, timeframe='today 5-y', geo='', gprop='')
 
 	kw_blist = words
