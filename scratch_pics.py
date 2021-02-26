@@ -1,75 +1,57 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
-from pandas import DataFrame
 
-price7 = pd.read_pickle("pickles/LTC-USD_price_2017.pkl")
-price8 = pd.read_pickle("pickles/LTC-USD_price_2018.pkl")
-price9 = pd.read_pickle("pickles/LTC-USD_price_2019.pkl")
-
-frames = [price7, price8, price9]
-price = pd.concat(frames)
-priceroll = price.rolling(1).sum()
-priceroll = priceroll.rename(columns = {'Open':'RA7'})
-s = priceroll['RA7']
-price = pd.concat([price, s], axis = 1)
-price = price.loc[:,['RA7', 'Open']]
-
-searches7 = pd.read_pickle("pickles/litecoin_searches_2017.pkl")
-searches8 = pd.read_pickle("pickles/litecoin_searches_2018.pkl")
-searches9 = pd.read_pickle("pickles/litecoin_searches_2019.pkl")
-frames = [searches7, searches8, searches9]
-searches = pd.concat(frames)
-
-searchesroll = searches.rolling(1).sum()
-searchesroll = searchesroll.rename(columns = {'litecoin': 'RA7 search'})
-searches = pd.concat([searches, searchesroll['RA7 search']], axis = 1)
-plt.figure(figsize = (10,5))
-#searches.plot(ylabel = 'Google Searches')
-searches['RA7 search'].plot(legend = True, ylabel = 'Google Searches')
-#price.plot(secondary_y = True)
-price['RA7'].plot(secondary_y=True, style='r', legend = True)
-#priceroll['Open'].plot(secondary_y=True, style='g', legend = True)
-
-#price['Open'].plot(legend = True, ylabel = 'Price')
-#searches['litecoin_unscaled'].plot(secondary_y=True, style='g', legend = True)
-plt.show()
-
-#df = pd.DataFrame(np.random.randn(5, 4), columns=['A', 'B', 'C', 'D'])
-#plt.close("all")
+from get_unmodified_graph import graph_df
 
 '''
-plt.figure()
+fig = plt.figure()
+gs = fig.add_gridspec(2, 2)
+ax1 = fig.add_subplot(gs[0, 0])
+ax2 = fig.add_subplot(gs[1, 0])
+# spans two rows:
+ax3 = fig.add_subplot(gs[:, 1])
 
-ax = df.plot(secondary_y = ['A', 'B'])
-ax.set_ylabel('C scale')
-ax.right_ax.set_ylabel('AB scale')
+ax1.plot(np.random.rand(20))
+ax2.plot(np.random.rand(50))
+ax3.plot(range(10))
 plt.show()
 '''
 
-#dfgraph = pd.read_pickle("./dfgraph.pkl")
+
 
 '''
-# Create some mock data
-t = np.arange(0.01, 10.0, 0.01)
-data1 = np.exp(t)
-data2 = np.sin(2 * np.pi * t)
 
-fig, ax1 = plt.subplots()
+fig = plt.figure(figsize = (10, 5))
+ax1 = fig.add_subplot(111)
+ax2 = fig.add_subplot(3, 9 , (1,9))
+#ax = plt.subplots()
+print(type(fig))
+print(type(ax1))
 
-color = 'tab:red'
-ax1.set_xlabel('time (s)')
-ax1.set_ylabel('exp', color=color)
-ax1.plot(t, data1, color=color)
-ax1.tick_params(axis='y', labelcolor=color)
+ax1.plot(np.random.rand(20))
+ax2.plot(np.random.rand(50))
+plt.show()
+'''
 
-ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
-color = 'tab:blue'
-ax2.set_ylabel('sin', color=color)  # we already handled the x-label with ax1
-ax2.plot(t, data2, color=color)
-ax2.tick_params(axis='y', labelcolor=color)
+'''
+fig, ax = plt.subplots()
+ax.plot(np.random.rand(20))
+ax.set_title('test title')
+plt.show()
+'''
 
-fig.tight_layout()  # otherwise the right y-label is slightly clipped
+
+'''
+n_rows = 2
+n_cols = 2
+fig, axes = plt.subplots(n_rows, n_cols)
+for row_num in range(n_rows):
+    for col_num in range(n_cols):
+        ax = axes[row_num][col_num]
+        ax.plot(np.random.rand(20))
+        ax.set_title(f'Plot ({row_num+1}, {col_num+1})')
+fig.suptitle('Main title')
+fig.tight_layout()
 plt.show()
 '''

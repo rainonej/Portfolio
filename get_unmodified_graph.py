@@ -9,7 +9,7 @@ SYMBL = 'LTC-USD'
 KEY_WORD = 'litecoin'
 START_DATE = '2017-06-01'
 END_DATE = '2020-12-30'
-WIN_SIZE = 3
+WIN_SIZE = 7
 
 #Getting the right Data Frames
 start_year = START_DATE[:4]
@@ -41,31 +41,29 @@ graph_df = searches_df.join(price_df)
 corr = graph_df.corr()
 corr = corr.loc['Open', KEY_WORD]
 corr = str(np.round(corr, 3))
-
-print("Correlation factor of " + corr)
-
+#print("Correlation factor of " + corr)
 
 
-#Renaming things and drawing the graph
-#price_df = price_df.rename(columns = )
+#Creating the Graph
+title = str(WIN_SIZE) + " Day Rolling Average\n" + "r = " + corr
+color1 = 'tab:red'
+color2 = 'tab:blue'
 
+fig = plt.figure(figsize = (10,5)) #Instantiate the Figure
+gs = fig.add_gridspec(1, 1) #Choose the grid size for the number of graphs
 
-plt.figure(figsize = (10,5))
-plt.title("Correlation factor of " + corr)
-graph_df[KEY_WORD].plot(legend = True, ylabel = 'Google Searches')
-graph_df["Open"].plot(secondary_y = True, legend = True)
+ax1 = fig.add_subplot(gs[0, 0])
+ax1.plot(graph_df["Open"], color = color1)
+ax1.set_xlabel('Date')
+ax1.set_ylabel('Price in USD', color = color1)
+ax1.tick_params(axis='y', labelcolor=color1)
+ax1.legend(["LTC"], loc = "upper left")
 
-'''
-#searches.plot(ylabel = 'Google Searches')
-searches_df.plot(legend = True, ylabel = 'Google Searches')
-#price.plot(secondary_y = True)
-price_df.plot(secondary_y=True, style='r', legend = True)
-#priceroll['Open'].plot(secondary_y=True, style='g', legend = True)
+ax2 = ax1.twinx() # instantiate a second axes that shares the same x-axis
+ax2.plot(graph_df[KEY_WORD], color = color2)
+ax2.set_ylabel('Google Searches per Day', color = color2)
+ax2.tick_params(axis='y', labelcolor=color2)
+ax2.legend(['"Litecoin"'], loc = "upper right")
 
-#price['Open'].plot(legend = True, ylabel = 'Price')
-#searches['litecoin_unscaled'].plot(secondary_y=True, style='g', legend = True)
-'''
-
+plt.title(title)
 plt.show()
-
-
