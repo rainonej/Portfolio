@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
-from get_unmodified_graph import graph_df
+#from get_unmodified_graph import graph_df
 
 '''
 fig = plt.figure()
@@ -16,42 +17,39 @@ ax2.plot(np.random.rand(50))
 ax3.plot(range(10))
 plt.show()
 '''
+SYMBL = 'LTC-USD'
+KEY_WORD = 'litecoin'
+START_DATE = '2017-06-01'
+END_DATE = '2017-06-05'
+WIN_SIZE = 1
 
+#Getting the right Data Frames
+start_year = START_DATE[:4]
+end_year = END_DATE[:4]
 
+price_df = pd.DataFrame({})
+searches_df = pd.DataFrame({})
 
-'''
+for year in range(int(start_year), int(end_year)+1):
+	price_file = "pickles/" + SYMBL + "_price_" + str(year) + ".pkl"
+	search_file = "pickles/" + KEY_WORD + "_searches_" + str(year) + ".pkl"
+	price_df = pd.concat([price_df, pd.read_pickle(price_file)])
+	searches_df = pd.concat([searches_df, pd.read_pickle(search_file)])
 
-fig = plt.figure(figsize = (10, 5))
-ax1 = fig.add_subplot(111)
-ax2 = fig.add_subplot(3, 9 , (1,9))
-#ax = plt.subplots()
-print(type(fig))
-print(type(ax1))
+price_df = price_df.loc[START_DATE:END_DATE]
+searches_df = searches_df.loc[START_DATE:END_DATE]
 
-ax1.plot(np.random.rand(20))
-ax2.plot(np.random.rand(50))
+labels = list(map(str, price_df.index))
+labels = ['a', 'b', 'c', 'd', 'e']
+print(labels)
+
+fig = plt.figure(figsize = (5,5)) #Instantiate the Figure
+gs = fig.add_gridspec(1, 1) #Choose the grid size for the number of graphs
+
+#ax = fig.add_axes(list(price_df["Open"]))
+ax = fig.add_axes([0,0,1,1])
+ax.bar(labels, price_df["Open"])
+#ax1 = fig.add_subplot(gs[0, 0])
+#ax1.plot(graph_df["Open"], color = color1)
+
 plt.show()
-'''
-
-
-'''
-fig, ax = plt.subplots()
-ax.plot(np.random.rand(20))
-ax.set_title('test title')
-plt.show()
-'''
-
-
-'''
-n_rows = 2
-n_cols = 2
-fig, axes = plt.subplots(n_rows, n_cols)
-for row_num in range(n_rows):
-    for col_num in range(n_cols):
-        ax = axes[row_num][col_num]
-        ax.plot(np.random.rand(20))
-        ax.set_title(f'Plot ({row_num+1}, {col_num+1})')
-fig.suptitle('Main title')
-fig.tight_layout()
-plt.show()
-'''

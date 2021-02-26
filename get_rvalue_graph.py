@@ -6,10 +6,10 @@ from pandas import DataFrame
 #gives the graph of Stock Price and Google Searches
 
 SYMBL = 'LTC-USD'
-KEY_WORD = 'Cat'
+KEY_WORD = 'litecoin'
 START_DATE = '2017-06-01'
 END_DATE = '2020-12-30'
-WIN_SIZE = 7
+WIN_SIZE = 1
 
 #Getting the right Data Frames
 start_year = START_DATE[:4]
@@ -38,10 +38,25 @@ searches_df = searches_df.rolling(WIN_SIZE).sum()
 searches_df = searches_df.to_frame()
 
 graph_df = searches_df.join(price_df)
+
+
 corr = graph_df.corr()
 corr = corr.loc['Open', KEY_WORD]
 corr = str(np.round(corr, 3))
-#print("Correlation factor of " + corr)
+print("Correlation factor of " + corr)
+
+df_mod = graph_df
+max_shift = 10
+shift_start = -10
+for i in range(shift_start, max_shift+1):
+	temp = graph_df['Open'].shift(i)
+	temp = temp.to_frame()
+	temp = temp.rename(columns = {'Open':'Open' + str(i)})
+	df_mod = df_mod.join(temp)
+
+corr = df_mod.corr()
+print(corr[KEY_WORD])
+'''
 
 
 #Creating the Graph
@@ -67,3 +82,4 @@ ax2.legend(['"'+KEY_WORD+'"'], loc = "upper right")
 
 plt.title(title)
 plt.show()
+'''
