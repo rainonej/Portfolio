@@ -3,8 +3,14 @@ from pytrendsdaily import getDailyData
 from os import path
 from key_words import key_words, start_year, end_year, SYMBLs
 
+
+# Look into this: https://stackoverflow.com/questions/2831775/running-a-python-script-for-a-user-specified-amount-of-time
+import random
+
+years = list(range(start_year, end_year+1))
+
 print('key words = ')
-print(key_words)
+#print(key_words)
 
 duration = 1 #number of mins it will run for
 import time
@@ -13,6 +19,17 @@ timeout = time.time() + 60*duration
 verbose = True
 updates = True
 update_time = 15 # 15 seconds
+shuffle = True
+
+if shuffle:
+	random.shuffle(key_words)
+	random.shuffle(years)
+	print(key_words)
+	print(years)
+else:
+	print(key_words)
+
+
 
 
 while True:
@@ -24,14 +41,11 @@ while True:
 	update = time.time()
 
 	for key in key_words:
-		for year in range(start_year, end_year+1):
+		for year in years:
 			filename = key + '_searches_' + str(year) + '.pkl'
 			if path.exists("pickles/" + filename):
 				if verbose: print(filename + ' already exists')
 			else:
-
-				if verbose: print('Attempting to get', key,  year)
-				search_trend = getDailyData(key, year, year, wait_time = 5, verbose = verbose)
 				try:
 					if verbose: print('Attempting to get', key,  year)
 					search_trend = getDailyData(key, year, year, wait_time = 0, verbose = verbose)
