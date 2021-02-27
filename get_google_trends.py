@@ -6,23 +6,16 @@ from key_words import key_words, start_year, end_year, SYMBLs
 print('key words = ')
 print(key_words)
 
+duration = 1 #number of mins it will run for
 import time
-timeout = time.time() + 60*5  # 5 minutes from now
+timeout = time.time() + 60*duration  
 
-verbose = False
+verbose = True
 updates = True
 update_time = 15 # 15 seconds
 
-while True:
-	if (failed == 0):
-		if (updates or verbose):
-			print('Finished!')
-			break
 
-	if time.time() > timeout:
-		if (updates or verbose):
-			print('Timed out.')
-		break
+while True:
 
 	if updates: print('New cycle started')
 
@@ -36,7 +29,11 @@ while True:
 			if path.exists("pickles/" + filename):
 				if verbose: print(filename + ' already exists')
 			else:
+
+				if verbose: print('Attempting to get', key,  year)
+				search_trend = getDailyData(key, year, year, wait_time = 5, verbose = verbose)
 				try:
+					if verbose: print('Attempting to get', key,  year)
 					search_trend = getDailyData(key, year, year, wait_time = 0, verbose = verbose)
 					search_trend = search_trend.reset_index()
 					search_trend = search_trend.rename(columns={"date": "Date"})
@@ -56,9 +53,21 @@ while True:
 					mins = int((timeout - time.time())/60)
 					secs = int((timeout - time.time())%60)
 					print(mins, ':', secs, ' remain')
-					#print(int((timeout - time.time())/60), ' mins and ', int((timeout - time.time())%60), ' secs. remain')
 
+			if time.time() > timeout:
+				break
+		if time.time() > timeout:
+			break
+	if time.time() > timeout:
+		if (updates or verbose):
+			print('Timed out.')
+		break
 
-	if updates: print(succeeded, ' succeeded, and ', failed, ' failed this cycle')
+	if (failed == 0):
+		if (updates or verbose):
+			print('Finished!')
+		break
+
+	if updates: print('Cycle finished.\n', succeeded, ' succeeded, and ', failed, ' failed this cycle')
 
 
