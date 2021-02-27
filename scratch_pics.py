@@ -20,7 +20,7 @@ plt.show()
 SYMBL = 'LTC-USD'
 KEY_WORD = 'litecoin'
 START_DATE = '2017-06-01'
-END_DATE = '2017-06-05'
+END_DATE = '2018-06-05'
 WIN_SIZE = 1
 
 #Getting the right Data Frames
@@ -43,7 +43,12 @@ labels = list(map(str, price_df.index))
 labels = ['a', 'b', 'c', 'd', 'e']
 print(labels)
 
+df = price_df['Open']
+#pd.plotting.lag_plot(df)
+pd.plotting.autocorrelation_plot(df)
+plt.show()
 
+'''
 fig = plt.figure(figsize = (5,5)) #Instantiate the Figure
 gs = fig.add_gridspec(1, 1) #Choose the grid size for the number of graphs
 
@@ -54,3 +59,4 @@ ax.bar(labels, price_df["Open"])
 #ax1.plot(graph_df["Open"], color = color1)
 
 plt.show()
+'''
