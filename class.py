@@ -4,11 +4,12 @@ from os import path
 
 class Crypto(object):
 	"""docstring for Crypto"""
-	def __init__(self, name, symbl):
+	def __init__(self, name, symbl, search_terms = []):
 		#super(Crypto, self).__init__()
 		self.name = name
 		self.symbl = symbl
 		self.symblUSD = symbl + '-USD'
+		self.search_terms = search_terms
 
 		self.__get_price_files__()
 
@@ -29,6 +30,9 @@ class Crypto(object):
 				self.price_files.append(price_filename)
 
 			year += 1
+
+	def get_search_files(self):
+		pass
 	
 
 
