@@ -43,6 +43,7 @@ labels = list(map(str, price_df.index))
 labels = ['a', 'b', 'c', 'd', 'e']
 print(labels)
 
+
 fig = plt.figure(figsize = (5,5)) #Instantiate the Figure
 gs = fig.add_gridspec(1, 1) #Choose the grid size for the number of graphs
 
