@@ -5,7 +5,7 @@ kw_list = ['litecoin', 'LTC-USD']
 SYMBLs = ['DOGE', 'LTC', 'ETH', 'BTC', 'VET', 'ZRX', 'ADA', 'BNB', 'USDT', 'DOT1', 'DOT2', 'XRP', 'LINK', 'BCH', 'XLM', 'USDC', 'XEM', 'ATOM1', 'SOL2', 'SOL1', 'EOS', 'BSV', 'TRX', 'MIOTA', 'THETA']
 SYMBLs = list(map(lambda s: s + '-USD', SYMBLs))
 #key_words = ['Dogecoin', 'Ethereum', 'crypto market']
-key_words = ['Cardano', 'Tether', 'Polkadot', 'XRP', 'Litecoin', 'Chainlink', 'BitcoinCash', 'Stellar', 'USDCoin', 'Bitcoin', 'NEM USD', 'Cosmos USD', 'Solana', 'EOS', 'BitcoinSV', 'TRON USD', 'IOTA USD', 'THETA USD'] #, 'BinanceCoin']
+key_words = ['Cardano', 'Tether', 'Polkadot', 'XRP', 'Litecoin', 'Chainlink', 'BitcoinCash', 'Stellar', 'USDCoin', 'Bitcoin', 'NEM USD', 'Cosmos USD', 'Solana', 'EOS', 'BitcoinSV', 'TRON USD', 'IOTA USD', 'THETA USD', 'BinanceCoin']
 
 
 from get_suggestions import new_words
