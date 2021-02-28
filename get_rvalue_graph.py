@@ -2,24 +2,52 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas import DataFrame
-
+from key_words import get_obj
 #gives the graph of Stock Price and Google Searches
 
-SYMBL = 'LTC-USD'
-KEYWORDS = ['litecoin', 'bitcoin', 'Pasta']
-#KEYWORD = 'crypto market'
+
+graph = True
+SYMBL = 'LTC'
 START_DATE = '2018-06-01'
 END_DATE = '2020-12-30'
+
+obj = get_obj(SYMBL)
+
+#check
+start_year = int(START_DATE[:4])
+end_year = int(END_DATE[:4])
+if (start_year in obj.price_data.keys()):
+	print("good to go")
+
+
+SYMBL = obj.symblUSD
+KEYWORDS = list(obj.search_data.keys())
+
+#only want to words that have all the data we need
+for term in KEYWORDS:
+	for year in range(start_year, end_year+1):
+		if year not in obj.search_data[term].keys():
+			KEYWORDS.remove(term)
+			break
+
+KEYWORDS.remove('Litecoin')
+
+
+#KEYWORD = 'crypto market'
+
 WIN_SIZE = 7
 
 def quote(string):
 	return '"' + string + '"'
+
 
 #Getting the right Data Frames
 start_year = START_DATE[:4]
 end_year = END_DATE[:4]
 
 corr_data = []
+
+print(KEYWORDS)
 
 for KEYWORD in KEYWORDS:
 
@@ -41,6 +69,8 @@ for KEYWORD in KEYWORDS:
 	price_df = price_df.rolling(WIN_SIZE).sum()
 	price_df = price_df.to_frame()
 
+	print(searches_df)
+	print(KEYWORD)
 	searches_df = searches_df.loc[:, KEYWORD]
 	searches_df = searches_df.rolling(WIN_SIZE).sum()
 	searches_df = searches_df.to_frame()
@@ -71,42 +101,44 @@ for KEYWORD in KEYWORDS:
 	print(Corr_list)
 	corr_data.append(Corr_list)
 
+
+
+
 #print('About to calculate Correlation Matrix')
 #corr = df_mod.corr()
-print(Corr_list)
-xlabels = list(map(str, range(shift_start, max_shift+1)))
+#print(Corr_list)
 #fig = plt.figure(figsize = (5,5)) #Instantiate the Figure
 #gs = fig.add_gridspec(1, 1) #Choose the grid size for the number of graphs
 
 #ax = fig.add_axes(list(price_df["Open"]))
 #ax = fig.add_axes([0,0,1,1])
 
+if graph:
+	fig, ax = plt.subplots(figsize = (10,5))
+	xlabels = list(map(str, range(shift_start, max_shift+1)))
+	labels = list(map(quote, KEYWORDS))
+	n = len(KEYWORDS)
+	space = 1
+	width = 1/(n+space)
+	#width = 1  # the width of the bars
+	x = np.arange(len(xlabels))  # the label locations
 
-fig, ax = plt.subplots(figsize = (10,5))
+	for i in range(n):
+		ax.bar(x - .5 + (i + space/2 + .5) * width, corr_data[i], width, label = labels[i])
+	#ax.bar(x , corr_data[0], width, label = quote(KEYWORD))
+	#ax.bar(labels, Corr_list, )
+	#ax.bar(x + width/2, corr_data[1], width, label = 'Control')
 
-labels = list(map(quote, KEYWORDS))
-n = len(KEYWORDS)
-space = 1
-width = 1/(n+space)
-#width = 1  # the width of the bars
-x = np.arange(len(xlabels))  # the label locations
+	ax.set_ylabel('r Value')
+	ax.set_title('Correlation of ' + obj.name + ' price with Google Searches\n Shifted by T = No. of Days')
+	ax.set_xticks(x)
+	ax.set_xlabel('Google Predicts Market       <---------       T = # of days       --------->       Google Reacts to Market')
+	ax.set_xticklabels(xlabels)
+	ax.legend()
+	#ax1 = fig.add_subplot(gs[0, 0])
+	#ax1.plot(graph_df["Open"], color = color1)
 
-for i in range(n):
-	ax.bar(x - .5 + (i + space/2 + .5) * width, corr_data[i], width, label = labels[i])
-#ax.bar(x , corr_data[0], width, label = quote(KEYWORD))
-#ax.bar(labels, Corr_list, )
-#ax.bar(x + width/2, corr_data[1], width, label = 'Control')
-
-ax.set_ylabel('r Value')
-ax.set_title('Correlation of LTC price with Google Searches\n Shifted by T = No. of Days')
-ax.set_xticks(x)
-ax.set_xlabel('Google Predicts Market       <---------       T = # of days       --------->       Google Reacts to Market')
-ax.set_xticklabels(xlabels)
-ax.legend()
-#ax1 = fig.add_subplot(gs[0, 0])
-#ax1.plot(graph_df["Open"], color = color1)
-
-plt.show()
+	plt.show()
 
 
 '''

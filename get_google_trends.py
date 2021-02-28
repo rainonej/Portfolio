@@ -14,7 +14,7 @@ def search_path(term, year):
 def get_search_data(obj, verbose = True, very_verbose = True):
 	"Given a crypto object, it will request the search data for all the search terms starting from the start year"
 	for term in obj.search_terms:
-		for year in range(obj.start_year, 2022):
+		for year in range(obj.start_year, 2021):
 			filepath = search_path(term, year)
 			if path.exists(filepath):
 				if verbose: print(filepath, 'already exists')
@@ -31,9 +31,9 @@ def get_search_data(obj, verbose = True, very_verbose = True):
 
 					if verbose: print(filepath + ' stored')
 				except:
-					if verbose: print('Google prevented ' + filename + ' from being stored')
+					if verbose: print('Google prevented ' + filepath + ' from being stored')
 
-a = get_obj('ADA')
+a = get_obj('LTC')
 get_search_data(a)
 
 '''

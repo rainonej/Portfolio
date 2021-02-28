@@ -12,6 +12,7 @@ for symbl in SYMBLs:
 	pickle.dump(Cryptos[symbl], open(Cryptos[symbl].path, "wb"))
 
 Cryptos['DOGE'].add_search_terms(['dogecoin stock', 'dogecoin price'])
+#Cryptos['LTC'].add_search_terms(['litecoin'])
 
 
 #Cryptos = {}
