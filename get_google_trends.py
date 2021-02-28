@@ -1,10 +1,42 @@
 import pandas as pd
 from pytrendsdaily import getDailyData
 from os import path
-from key_words import key_words, start_year, end_year, SYMBLs
+from key_words import key_words, start_year, end_year, SYMBLs, get_obj
 
 
 # Look into this: https://stackoverflow.com/questions/2831775/running-a-python-script-for-a-user-specified-amount-of-time
+
+def search_path(term, year):
+	"returns the path you wanted in a string form"
+	return "pickles/" + term + '_searches_' + str(year) + '.pkl'
+
+
+def get_search_data(obj, verbose = True, very_verbose = True):
+	"Given a crypto object, it will request the search data for all the search terms starting from the start year"
+	for term in obj.search_terms:
+		for year in range(obj.start_year, 2022):
+			filepath = search_path(term, year)
+			if path.exists(filepath):
+				if verbose: print(filepath, 'already exists')
+			else:
+				try:
+					if verbose: print('Attempting to get', term,  year)
+					search_trend = getDailyData(term, year, year, wait_time = 0, verbose = very_verbose)
+					search_trend = search_trend.reset_index()
+					search_trend = search_trend.rename(columns={"date": "Date"})
+					search_trend = search_trend.set_index('Date')
+					search_trend.to_pickle(filepath)
+					obj.update_search_files()
+
+
+					if verbose: print(filepath + ' stored')
+				except:
+					if verbose: print('Google prevented ' + filename + ' from being stored')
+
+a = get_obj('ADA')
+get_search_data(a)
+
+'''
 import random
 
 years = list(range(start_year, end_year+1))
@@ -89,3 +121,4 @@ while True:
 	if updates: print('Cycle finished.\n', succeeded, ' succeeded, and ', failed, ' failed this cycle')
 
 
+'''
