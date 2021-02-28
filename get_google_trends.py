@@ -12,14 +12,15 @@ years = list(range(start_year, end_year+1))
 print('key words = ')
 #print(key_words)
 
-duration = 1 #number of mins it will run for
-import time
-timeout = time.time() + 60*duration  
-
+duration = 5 #number of mins it will run for
 verbose = True
+very_verbose = False
 updates = True
 update_time = 15 # 15 seconds
-shuffle = True
+shuffle = False
+
+import time
+timeout = time.time() + 60*duration  
 
 if shuffle:
 	random.shuffle(key_words)
@@ -48,7 +49,7 @@ while True:
 			else:
 				try:
 					if verbose: print('Attempting to get', key,  year)
-					search_trend = getDailyData(key, year, year, wait_time = 0, verbose = verbose)
+					search_trend = getDailyData(key, year, year, wait_time = 0, verbose = very_verbose)
 					search_trend = search_trend.reset_index()
 					search_trend = search_trend.rename(columns={"date": "Date"})
 					search_trend = search_trend.set_index('Date')
@@ -64,9 +65,12 @@ while True:
 				if (time.time() > update):
 					update = time.time() + update_time
 					print(succeeded, ' succeeded, and ', failed, ' failed so far in this cycle')
+					minus = ''
+					if (timeout - time.time())<0:
+						minus = '-'
 					mins = int((timeout - time.time())/60)
 					secs = int((timeout - time.time())%60)
-					print(mins, ':', secs, ' remain')
+					print(minus, mins, ':', secs, ' remain')
 
 			if time.time() > timeout:
 				break
