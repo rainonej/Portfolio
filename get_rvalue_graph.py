@@ -74,6 +74,7 @@ for KEYWORD in KEYWORDS:
 
 
 	#Getting the columns we want and Calculating the Rolling Average
+	print(price_df)
 	price_df = price_df.loc[:, "Open"]
 	price_df = price_df.rolling(WIN_SIZE).sum()
 	price_df = price_df.to_frame()
