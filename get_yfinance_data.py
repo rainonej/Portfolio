@@ -20,14 +20,12 @@ for SYMBL in SYMBLs:
 		filename = "pickles/" + SYMBL + '_price_' + str(year) + '.pkl'
 		
 
-		
 		if path.exists(filename):
 			if check_size(filename):
 				print(filename + ' already exists')
 			else:
 				#remove(filename)
 				print(filename, "is wrong")
-		
 
 		else:
 			start_date = str(year) + '-01-01'

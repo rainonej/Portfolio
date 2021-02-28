@@ -30,7 +30,8 @@ for term in KEYWORDS:
 			KEYWORDS.remove(term)
 			break
 
-KEYWORDS.remove('Litecoin')
+print(KEYWORDS)
+#KEYWORDS.remove('Litecoin')
 
 
 #KEYWORD = 'crypto market'
@@ -58,7 +59,15 @@ for KEYWORD in KEYWORDS:
 		price_file = "pickles/" + SYMBL + "_price_" + str(year) + ".pkl"
 		search_file = "pickles/" + KEYWORD + "_searches_" + str(year) + ".pkl"
 		price_df = pd.concat([price_df, pd.read_pickle(price_file)])
-		searches_df = pd.concat([searches_df, pd.read_pickle(search_file)])
+
+		df_temp = pd.read_pickle(search_file)
+		if (KEYWORD == 'Litecoin'):
+			df_temp = df_temp.rename(columns = {'litecoin':'Litecoin', 'litecoin_unscaled':'Litecoin_unscaled', 'litecoin_monthly':'Litecoin_monthly'})
+			print('hi there')
+			print(df_temp)
+			df_temp.to_pickle(search_file)
+			df_temp = pd.read_pickle(search_file)
+		searches_df = pd.concat([searches_df, df_temp])
 
 	price_df = price_df.loc[START_DATE:END_DATE]
 	searches_df = searches_df.loc[START_DATE:END_DATE]
