@@ -5,8 +5,8 @@ from pandas import DataFrame
 from key_words import get_obj
 #gives the graph of Stock Price and Google Searches
 
-a = get_obj('ZRX')
-START_DATE = '2019-01-01'
+a = get_obj('LTC')
+START_DATE = '2018-01-01'
 END_DATE = '2020-12-30'
 
 def quote(string):
@@ -27,8 +27,8 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		if verbose: print('We have the price data')
 	else:
 		if verbose: print("Do no have the price data")
+		return ":("
 
-	#temp = search_terms
 	for year in range(start_year, end_year+1):
 		for term in search_terms:
 			print(term)
@@ -43,7 +43,8 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 	if verbose: print('search terms are now', search_terms)
 
 	## Price Data
-	price_df = obj.get_price_df(start_date, end_date) 	#Get the price data 
+	price_df = obj.get_price_df(start_date, end_date, edited = True) 	#Get the price data 
+	#return price_df
 	price_df = price_df.rolling(win_size).sum()   #Calculate the rolling average
 	(predict, react) = boundary	#Preform shifts
 	for i in range(predict, react+1):

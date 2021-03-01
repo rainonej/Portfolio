@@ -10,21 +10,20 @@ def check_size(string):
 	obj = pickle.load(file)
 	#file.close()
 	return (obj.size != 0)
-	
 
+#SYMBLs = ['LTC']
 for SYMBL in SYMBLs:
 	obj = get_obj(SYMBL)
 	start_year = obj.start_year
 
 	for year in range(start_year, end_year+1):
-		filename = "pickles/" + SYMBL + '_price_' + str(year) + '.pkl'
+		filename = "pickles/" + obj.symblUSD + '_price_' + str(year) + '.pkl'
 		
-
 		if path.exists(filename):
 			if check_size(filename):
 				print(filename + ' already exists')
 			else:
-				#remove(filename)
+				remove(filename)
 				print(filename, "is wrong")
 
 		else:

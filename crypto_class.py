@@ -144,15 +144,14 @@ class Crypto(object):
 		self.search_terms += words
 		#self.search_terms = list(map(lambda x: x.capitalize(), self.search_terms))
 		self.search_terms = list(set(self.search_terms))
-		self.__get_search_files__()
-		self.update()
+		self.update_search_files()
 		if verbose: print('Search terms:', self.search_terms)
 
 	def remove_search_terms(self, words, verbose = True):
 		"removes these words from the search_terms"
 		for term in words:
 			self.search_terms.remove(term)
-		self.update()
+		self.update_search_files()
 		if verbose: print('Search terms:', self.search_terms)
 
 
