@@ -106,7 +106,7 @@ class Crypto(object):
 
 		return df
 
-	def get_search_df(self, start_date, end_date, term, edited = True, outside = False):
+	def get_search_df(self, start_date, end_date, term, edited = True, outside = False, verbose = False):
 		""" 
 		input
 		start_date = string(2016-01-30)
@@ -130,7 +130,7 @@ class Crypto(object):
 		df = df.loc[start_date:end_date, :]
 
 		print('you searched for', term)
-		print(df)
+		if verbose: print(df)
 		if edited:
 			df = df.loc[:, term]
 			df = df.to_frame()
