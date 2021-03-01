@@ -52,7 +52,10 @@ def get_graph(obj, start_date = 'DEFAULT', end_date = 'DEFAULT', search_terms = 
 		#ax1.plot(search_df['Litecoin'])
 		#search_df['Litecoin'].plot(ax = ax1)
 		search_df.plot(ax = ax1)
-		ax2.plot(price_df['Open'], color = 'tab:red')
+		print(price_df)
+		price_df.plot(ax = ax2, color = 'tab:red')
+		#ax2.plot(price_df['Open'], color = 'tab:red')
+		
 		#plt.figure()
 		#search_df['Litecoin'].plot()
 		#fig = plt.figure(figsize = (5,5)) #Instantiate the Figure
@@ -81,7 +84,7 @@ def get_graph(obj, start_date = 'DEFAULT', end_date = 'DEFAULT', search_terms = 
 		plt.show()
 
 
-START_DATE = '2018-01-01'
-END_DATE = '2020-12-30'
-a = get_obj('DOGE')
-b = get_graph(a, start_date = START_DATE, end_date = END_DATE, win_size = 7)
+START_DATE = '2018-10-20'
+END_DATE = '2018-12-30'
+a = get_obj('LTC')
+b = get_graph(a, start_date = START_DATE, end_date = END_DATE, win_size = 1, search_terms = ['Litecoin'])

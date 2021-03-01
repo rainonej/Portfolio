@@ -23,9 +23,10 @@ filepath = 'https://raw.githubusercontent.com/selva86/datasets/master/Raotbl6.cs
 df = pd.read_csv(filepath, parse_dates=['date'], index_col='date')
 
 df1 = pd.read_pickle("pickles/LTC-USD_price_2018.pkl")
-df2 = pd.read_pickle("pickles/litecoin_searches_2018.pkl")
+df2 = pd.read_pickle("pickles/Litecoin_searches_2018.pkl")
 df3 = pd.concat([df1, df2], axis = 1)
-df3 = df3.loc['2018-01-07':'2018-12-31', ['Open', 'litecoin']]
+df3 = pd.concat([df3, pd.read_pickle("pickles/LTC USD_searches_2018.pkl"), pd.read_pickle("pickles/Bitcoin_searches_2018.pkl") ], axis = 1)
+df3 = df3.loc['2018-01-07':'2018-12-31', ['Open', 'Litecoin', 'LTC USD', 'Bitcoin']]
 
 if MINE: df = df3
 if MINE: print('My data now')
@@ -45,12 +46,12 @@ for i in range(4):
 		ax.set_title(df.columns[i])
 plt.tight_layout()
 plt.show()
-
-
 '''
+
+
 # Plot
-'''
-fig, axes = plt.subplots(nrows=4, ncols=2, dpi=120, figsize=(10,6))
+
+fig, axes = plt.subplots(nrows=4, ncols=1, dpi=120, figsize=(10,6))
 for i, ax in enumerate(axes.flatten()):
 	data = df[df.columns[i]]
 	print(type(data))
@@ -65,7 +66,7 @@ for i, ax in enumerate(axes.flatten()):
 
 plt.tight_layout()
 plt.show()
-'''
+
 from statsmodels.tsa.stattools import grangercausalitytests
 maxlag=12
 test = 'ssr_chi2test'
