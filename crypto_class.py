@@ -73,6 +73,8 @@ class Crypto(object):
 			if atrb in tick.info:
 				terms.append(tick.info[atrb])
 
+		#terms = list(map(lambda x: x.lower(), terms))
+
 		terms.append(self.symbl + ' USD')
 		self.search_terms += terms
 
@@ -103,22 +105,81 @@ class Crypto(object):
 
 		return df
 
+	def get_search_df(self, start_date, end_date, term, edited = True):
+		""" 
+		input
+		start_date = string(2016-01-30)
+		end_date = string(2018-06-24)
+		term = string
+		edited = bool
+
+		output
+		df = panda dataframe of the search files form those years"
+		"""
+		start_year = int(start_date[:4])
+		end_year = int(end_date[:4])
+
+		df = pd.DataFrame({})
+
+		for year in range(start_year, end_year+1):
+			filename = self.search_data[term][year]
+			df = pd.concat([df, pd.read_pickle(filename) ])
+
+		df = df.loc[start_date:end_date, :]
+
+		print('you searched for', term)
+		print(df)
+		if edited:
+			df = df.loc[:, term]
+			df = df.to_frame()
+
+		return df
+
 	def update(self):
 		"updates the pickle file"
 		pickle.dump(self, open(self.path, "wb"))
 
-	def add_search_terms(self, words):
+	def add_search_terms(self, words, verbose = True):
 		"adds the list of search terms to the object, and updates it."
 		self.search_terms += words
+		#self.search_terms = list(map(lambda x: x.capitalize(), self.search_terms))
 		self.search_terms = list(set(self.search_terms))
 		self.__get_search_files__()
 		self.update()
+		if verbose: print('Search terms:', self.search_terms)
+
+	def remove_search_terms(self, words, verbose = True):
+		"removes these words from the search_terms"
+		for term in words:
+			self.search_terms.remove(term)
+		self.update()
+		if verbose: print('Search terms:', self.search_terms)
+
 
 	def update_search_files(self):
 		"updates the search files"
 		self.__get_search_files__()
 		self.update()
 
+
+	def fix_capitalization_convention(self):
+		"Goes through the searh df files and corrects the calization"
+
+		for term in self.search_data:
+			for year in self.search_data[term]:
+				filename = self.search_data[term][year]
+				df = pd.read_pickle(filename)
+				if term in list(df.columns):
+					print(filename, 'was already in the correct format')
+				else:
+					print(filename, 'needs to be fixed')
+					old = list(df.columns)[-1]
+					dic = {old:term}
+					dic[old + '_unscaled'] = term + '_unscaled'
+					dic[old + '_monthly'] = term + '_monthly'
+					df = df.rename(columns = dic)
+					df.to_pickle(filename)
+					print(filename, 'is fixed')
 
 		
 #a = Crypto('lite', 'LTC', search_terms = ['litecoin'])

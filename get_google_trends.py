@@ -33,7 +33,7 @@ def get_search_data(obj, verbose = True, very_verbose = True):
 				except:
 					if verbose: print('Google prevented ' + filepath + ' from being stored')
 
-a = get_obj('LTC')
+a = get_obj('BTC')
 get_search_data(a)
 
 '''
