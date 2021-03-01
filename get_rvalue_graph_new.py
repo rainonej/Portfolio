@@ -2,7 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas import DataFrame
-from key_words import get_obj
+from key_words import get_obj, get_search_path
+from os import path
+
 #gives the graph of Stock Price and Google Searches
 
 a = get_obj('LTC')
@@ -13,7 +15,8 @@ def quote(string):
 	return '"' + string + '"'
 
 
-def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, boundary = (-5, 5), search_terms = 'Default', graph = True):
+
+def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, boundary = (-5, 5), search_terms = 'Default', extra_terms = [], graph = True):
 	"This is input an object and output a graph"
 
 	if search_terms == 'Default':
@@ -31,15 +34,21 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 
 	for year in range(start_year, end_year+1):
 		for term in search_terms:
-			print(term)
-			print(year)
-			print(search_terms)
-			print(obj.search_data)
+			#print(term)
+			#print(year)
+			#print(search_terms)
+			#print(obj.search_data)
 			if ((year not in obj.search_data[term]) and (term in search_terms)):
 				if verbose: print('Removed', term, 'from search_terms because of insufficient data')
 				search_terms.remove(term)
-				
 
+		for term in extra_terms:
+			if (not path.exists(get_search_path(term, year)) and (term in extra_terms)):
+				if verbose: print('Removed', term, 'from extra_terms because of insufficient data')
+				extra_terms.remove(term)
+
+	search_terms = search_terms + extra_terms
+				
 	if verbose: print('search terms are now', search_terms)
 
 	## Price Data
@@ -60,7 +69,7 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 	data_list = []
 	for term in search_terms:
 		print(term)
-		search_df = obj.get_search_df(start_date, end_date, term)
+		search_df = obj.get_search_df(start_date, end_date, term, outside = True)
 
 		#print(search_df)
 		#print(search_df.info())
@@ -90,7 +99,9 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		#ax.bar(x + width/2, corr_data[1], width, label = 'Control')
 
 		ax.set_ylabel('r Value')
-		ax.set_title('Correlation of ' + obj.name + ' price with Google Searches\n Shifted by T = No. of Days')
+		title = 'Correlation of ' + obj.name + ' price with Google Searches\n Shifted by T = No. of Days'
+		if (win_size != 1): title += '\n Rolling average taken over ' + str(win_size) + ' days'
+		ax.set_title(title)
 		ax.set_xticks(x)
 		ax.set_xlabel('Google Predicts Market       <---------       T = # of days       --------->       Google Reacts to Market')
 		ax.set_xticklabels(xlabels)
@@ -102,4 +113,4 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 
 
 
-b = get_rvalue_graph(a, START_DATE, END_DATE)
+b = get_rvalue_graph(a, START_DATE, END_DATE, win_size = 3, extra_terms = ['Bitcoin', 'Cat'])

@@ -3,6 +3,7 @@ import pandas as pd
 import yfinance as yf
 import pickle
 import datetime
+from key_words import get_search_path
 
 class Crypto(object):
 	"""docstring for Crypto"""
@@ -44,7 +45,7 @@ class Crypto(object):
 			self.search_data[term] = {}
 			year = self.start_year
 			while (year <= 2021):
-				filename = "pickles/" + term + '_searches_' + str(year) + '.pkl'
+				filename = get_search_path(term, year)
 				if path.exists(filename):
 					self.search_data[term][year] = filename		
 				year +=1		
@@ -105,7 +106,7 @@ class Crypto(object):
 
 		return df
 
-	def get_search_df(self, start_date, end_date, term, edited = True):
+	def get_search_df(self, start_date, end_date, term, edited = True, outside = False):
 		""" 
 		input
 		start_date = string(2016-01-30)
@@ -122,7 +123,8 @@ class Crypto(object):
 		df = pd.DataFrame({})
 
 		for year in range(start_year, end_year+1):
-			filename = self.search_data[term][year]
+			if outside: filename = get_search_path(term, year)
+			else: filename = self.search_data[term][year]
 			df = pd.concat([df, pd.read_pickle(filename) ])
 
 		df = df.loc[start_date:end_date, :]

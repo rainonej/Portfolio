@@ -22,7 +22,8 @@ Cryptos['LINK'].remove_search_terms(['chainlink'])
 Cryptos['MIOTA'].remove_search_terms(['iota'])
 Cryptos['ATOM1'].remove_search_terms(['cosmos', 'Cosmos'])
 Cryptos['ATOM1'].add_search_terms(['Cosmos Network'])
-
+#Cryptos['LTC'].remove_search_terms(['LTC USD'])
+Cryptos['LTC'].add_search_terms(['LTC-USD'])
 
 #Cryptos = {}
 #pickle.dump(symbl_list, open("pickles/objects/test.pkl", "wb"))

@@ -13,6 +13,9 @@ def get_obj(symbl):
 	file.close()
 	return obj
 
+def get_search_path(term, year):
+	return "pickles/" + term + "_searches_" + str(year) + ".pkl"
+
 
 #SYMBLs = list(map(lambda s: s + '-USD', SYMBLs))
 #key_words = ['Dogecoin', 'Ethereum', 'crypto market']
