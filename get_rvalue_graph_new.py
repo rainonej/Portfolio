@@ -14,8 +14,6 @@ END_DATE = '2020-12-30'
 def quote(string):
 	return '"' + string + '"'
 
-
-
 def get_corr(s1, s2, fun = lambda x: x):
 	"""
 	input
@@ -61,16 +59,9 @@ def best_corr(price_ser, search_ser):
 
 	print('best p = ', best_p)
 	print('r = ', max_corr)
-	return search_mod
+	return (search_mod, best_p)
 
-
-
-def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, boundary = (-5, 5), search_terms = 'Default', extra_terms = [], graph = True, modified = True):
-	"This is input an object and output a graph"
-
-	if search_terms == 'Default':
-		search_terms = obj.search_terms
-
+def censure_search_terms(obj, start_date, end_date, search_terms, extra_terms, verbose = True):
 	#Check that we have sufficient data
 	start_year = int(start_date[:4])
 	end_year = int(end_date[:4])
@@ -83,10 +74,6 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 
 	for year in range(start_year, end_year+1):
 		for term in search_terms:
-			#print(term)
-			#print(year)
-			#print(search_terms)
-			#print(obj.search_data)
 			if ((year not in obj.search_data[term]) and (term in search_terms)):
 				if verbose: print('Removed', term, 'from search_terms because of insufficient data')
 				search_terms.remove(term)
@@ -97,8 +84,19 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 				extra_terms.remove(term)
 
 	search_terms = search_terms + extra_terms
-				
 	if verbose: print('search terms are now', search_terms)
+	return search_terms
+
+
+def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, boundary = (-5, 5), search_terms = 'Default', extra_terms = [], graph = True, modified = True):
+	"This is input an object and output a graph"
+
+	if search_terms == 'Default':
+		search_terms = obj.search_terms
+
+	#Check that we have sufficient data
+	search_terms = censure_search_terms(obj, start_date, end_date, search_terms, extra_terms, verbose = verbose)
+	
 
 	## Price Data
 	price_df = obj.get_price_df(start_date, end_date, edited = True) 	#Get the price data 
@@ -111,8 +109,6 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		temp = temp.rename(columns = {'Open': 'T=' + str(i)})
 		price_df = pd.concat([price_df, temp], axis = 1)
 	price_df = price_df.drop(columns = 'Open')
-	
-
 
 	# Search Data and Correlation
 	data_list = []
@@ -123,7 +119,7 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		if modified:
 			s2 = search_df[term]
 			s1 = price_df['T=0']
-			s2 = best_corr(s1, s2)
+			(s2, tp) = best_corr(s1, s2)
 			search_df = s2.to_frame()
 
 		Df = search_df.join(price_df)
@@ -139,14 +135,10 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		n = len(search_terms)
 		space = 1
 		width = 1/(n+space)
-		#width = 1  # the width of the bars
 		x = np.arange(len(xlabels))  # the label locations
 
 		for i in range(n):
 			ax.bar(x - .5 + (i + space/2 + .5) * width, data_list[i], width, label = labels[i])
-		#ax.bar(x , corr_data[0], width, label = quote(KEYWORD))
-		#ax.bar(labels, Corr_list, )
-		#ax.bar(x + width/2, corr_data[1], width, label = 'Control')
 
 		ax.set_ylabel('r Value')
 		if modified: title = 'Correlation of ' + obj.name + ' price with (modified) Google Searches\n Shifted by T = No. of Days'
@@ -158,14 +150,12 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		ax.set_xlabel('Google Predicts Market       <---------       T = # of days       --------->       Google Reacts to Market')
 		ax.set_xticklabels(xlabels)
 		ax.legend()
-		#ax1 = fig.add_subplot(gs[0, 0])
-		#ax1.plot(graph_df["Open"], color = color1)
-
+		#ax.annotate('Something', xy=(-0.05, 1.05), xycoords='axes fraction')
 		plt.show()
 
 
-
-b = get_rvalue_graph(a, START_DATE, END_DATE, win_size = 3, extra_terms = ['Bitcoin', 'Cat'], graph = True)
+'''
+b = get_rvalue_graph(a, START_DATE, END_DATE, win_size = 3, extra_terms = ['Bitcoin'], graph = False)
 
 
 
@@ -176,3 +166,4 @@ s1 = s1.shift(-2)
 s2 = a.get_search_df(START_DATE, END_DATE, 'Litecoin', outside = True)
 s2 = s2['Litecoin']
 best_corr(s1, s2)
+'''

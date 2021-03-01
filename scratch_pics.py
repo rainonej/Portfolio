@@ -30,15 +30,6 @@ end_year = END_DATE[:4]
 price_df = pd.DataFrame({})
 searches_df = pd.DataFrame({})
 
-print('starting the loop')
-import time
-timeout = time.time() + 10  # 5 minutes from now
-test = 0
-while True:
-    test += 1
-    if time.time() > timeout:
-        break
-print('That took ', test, ' steps!')
 
 '''
 for year in range(int(start_year), int(end_year)+1):
@@ -58,6 +49,7 @@ df = price_df['Open']
 #pd.plotting.lag_plot(df)
 pd.plotting.autocorrelation_plot(df)
 plt.show()
+
 '''
 '''
 fig = plt.figure(figsize = (5,5)) #Instantiate the Figure
