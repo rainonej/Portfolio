@@ -1,15 +1,30 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+from key_words import get_obj
 
-df1 = pd.read_pickle("pickles/LTC-USD_price_2018.pkl")
-df2 = pd.read_pickle("pickles/Litecoin_searches_2018.pkl")
+df1 = pd.read_pickle("pickles/LTC-USD_price_2019.pkl")
+df2 = pd.read_pickle("pickles/Litecoin_searches_2019.pkl")
 #df2 = df1.rename(columns = {'Open':'Litecoin'})
 #df3 = pd.read_pickle("pickles/LTC USD_searches_2018.pkl")
 df3 = pd.concat([df1, df2], axis = 1)
-df = df3.loc['2018-01-07':'2018-12-31', ['Open', 'Litecoin']]
+df = df3.loc['2019-01-07':'2019-12-31', ['Open', 'Litecoin']]
 
 p=7
+a = get_obj('LTC')
+start_date = '2018-01-07'
+end_date = '2019-10-31'
+def get_data(obj, search_terms, start_date, end_date):
+	"returns the df file"
+
+	df = obj.get_price_df(start_date, end_date)
+
+	for term in search_terms:
+		df = pd.concat([df, obj.get_search_df(start_date, end_date, term, outside = True)], axis = 1)
+	print(df)
+	return(df)
+
+df = get_data(a,['Litecoin'], start_date, end_date )
 
 def split_data(df, percent = .8):
 	"Given a dataframe it splits the data into two unequal parts."
@@ -115,7 +130,7 @@ def get_profits(df_predict, df_test, mean_investment = 100, max_investment = flo
 	df_profit = df_profit.cumsum()
 	return df_profit
 
-df_profit = get_profits(df_predict, df_test, long_only = True)
+df_profit = get_profits(df_predict, df_test, long_only = True, max_investment = 200)
 print(df_profit)
 df_profit.plot()
 plt.show()

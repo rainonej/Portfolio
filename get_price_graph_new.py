@@ -84,7 +84,7 @@ def get_graph(obj, start_date = 'DEFAULT', end_date = 'DEFAULT', search_terms = 
 		plt.show()
 
 
-START_DATE = '2018-10-20'
-END_DATE = '2018-12-30'
+START_DATE = '2018-01-01'
+END_DATE = '2019-12-30'
 a = get_obj('LTC')
 b = get_graph(a, start_date = START_DATE, end_date = END_DATE, win_size = 1, search_terms = ['Litecoin'])
