@@ -5,6 +5,22 @@ from os import remove
 from key_words import SYMBLs, start_year, end_year, get_obj
 import pickle
 
+
+import yfinance as yf
+import pandas as pd
+
+'''
+def fun():
+	return "this is a fun thing to do"
+
+tick = yf.Ticker('LTC-USD')
+hist = tick.history(start = '2018-01-01', end = '2019-01-01')
+hist = hist.reset_index()
+hist = hist.set_index('Date')
+extra = str(hist.loc['2018-02-02', 'Open'])
+'''
+
+
 def check_size(string):
 	file = open(string, 'rb')
 	obj = pickle.load(file)

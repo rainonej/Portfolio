@@ -154,16 +154,69 @@ def get_rvalue_graph(obj, start_date, end_date, win_size = 1, verbose = True, bo
 		plt.show()
 
 
-'''
-b = get_rvalue_graph(a, START_DATE, END_DATE, win_size = 3, extra_terms = ['Bitcoin'], graph = False)
+
+def corr_graph(price_df, search_df, term, name, win_size=1, boundary = (-5, 5)):
+
+        price_df = price_df.rolling(win_size).sum()   #Calculate the rolling average
+        (predict, react) = boundary #Preform shifts
+        for i in range(predict, react+1):
+            temp = price_df['Open'].shift(i)
+            temp = temp.to_frame()
+            temp = temp.rename(columns = {'Open': 'T=' + str(i)})
+            price_df = pd.concat([price_df, temp], axis = 1)
+        price_df = price_df.drop(columns = 'Open')
+
+        Df = search_df.join(price_df)
+        corr = Df.corr()
+        data_list = list(corr.loc[:, term])[1:]
+        
+        #Create the bar graph
+        fig, ax = plt.subplots(figsize = (5,5))
+        xlabels = list(map(str, range(predict, react+1)))
+        label = '"' + term + '"'
+        #n = len(search_terms)
+        #space = 1
+        width = .5
+        x = np.arange(len(xlabels))  # the label locations
+
+        ax.bar(x - width/2, data_list, width, label = label)
+
+        ax.set_ylabel('r Value')
+        title = 'Correlation of ' + name + ' price with Google Searches\n Shifted by T = No. of Days'
+        if (win_size != 1): title += '\n Rolling average taken over ' + str(win_size) + ' days'
+        ax.set_title(title)
+        ax.set_xticks(x)
+        ax.set_xlabel('Google Predicts Market       <---------       T = # of days       --------->       Google Reacts to Market')
+        ax.set_xticklabels(xlabels)
+        ax.legend()
+        #ax.annotate('Something', xy=(-0.05, 1.05), xycoords='axes fraction')
+        #plt.show()
+        image = BytesIO()
+        plt.savefig(image, format = 'png')
+        string = base64.encodebytes(image.getvalue())
+        #print(string[:30])
+        return string
+
+
+#b = get_rvalue_graph(a, START_DATE, END_DATE, win_size = 3, extra_terms = ['Bitcoin'], graph = False)
 
 
 
 
 s1 = a.get_price_df(START_DATE, END_DATE)
 s1 = s1['Open']
-s1 = s1.shift(-2)
+#s1 = s1.shift(-2)
 s2 = a.get_search_df(START_DATE, END_DATE, 'Litecoin', outside = True)
 s2 = s2['Litecoin']
-best_corr(s1, s2)
-'''
+
+s1 = s1.to_frame()
+s2 = s2.to_frame()
+
+from io import BytesIO
+import base64
+
+
+corr_graph(s1, s2, 'Litecoin', 'Litecoin')
+
+#best_corr(s1, s2)
+print(2+2)

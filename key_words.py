@@ -26,3 +26,7 @@ key_words = ['0xproject', 'Cardano', 'Tether', 'Polkadot', 'XRP', 'Litecoin', 'C
 
 #key_words = new_words(kw_list)
 #key_word = key_words[0]
+
+import os
+print(str(__file__))
+print(str(os.path.abspath(__file__)))
