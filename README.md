@@ -6,22 +6,22 @@
 Create a website where day traders can test whether their knowledge of industry "chatter" can reliably be leveraged into profit. "Chatter" is a measure of public interest in a stock or cryptocurrency. Day traders are interested in knowing when and what type of "chatter" drives markets versus reacting to markets. The website will display this information in a clear way using multiple visualizations. Currently "chatter" is measured by daily Google searched for specific key words, but will incorporate metrics from Twitter, News articles, and Subreddits. 
 
 ### Who are the End Users?
-Any private person who is buying and selling stocks or cryptocurrencies on the daily to several months time scale. Day traders who have specific knowledge of the industry they are trading in (meaning, they know the terminology) will find this tool especially useful because it can quantify the feeling of "excitment" a particular industry feels about company/stock/cryptocurrency/etc... 
+Any private person who is buying and selling stocks or cryptocurrencies on the daily to several-months time-scale. Day traders who have specific knowledge of the industry they are trading in (meaning, they know the terminology) will find this tool especially useful because it can quantify the feeling of "excitement" a particular industry feels about company/stock/cryptocurrency/etc... 
 
 ### How will success be measured?
 Users who are interested in using a tool like this will likely be measuring its utility to them in terms of increased profit and reduced risk. If users were to pay for this service, then their investments would be recorded and compared against a simulated similar investment strategy which doesn't use "chatter".
 
 ### Details about the Current Version
 Users enter a Stock or Cryptocurrency Symbol, a search term, a time frame. 3 graphs are then displayed. 
-1. The first is a bar chart showing the correlation between stock prices of day T and google searches on day T-5, T-4, ..., T+4, T+5. If the correlation factor is higher on the leftside of the chart than the right, that means that "chatter" predicts/drives the market rather than reacting to it. 
-2. The second graph shows the stock price and the google searches on the same timescale. The y-axises are adjusted are adjusted to make it easier to read. This allows users to see where the correlation is coming from. Is it because the two graphs move together? Or is it because the value of the stock doesn't change and there are approximately 0 searches per day for the selected search word.
-3. The third graph shows the profits over time if one were to invest every day in this stock based on market predictions using both chatter and stock prices versus using just stock prices. Both models are Autoregression models using training data from the previous 6 months. Even if the model is acurate, the investment strategy is not meant to be a realistic one. It is only meant to show if profits can be increased using this additional "chatter" information.
+1. The first is a bar chart showing the correlation between stock prices of day T and google searches on day T-5, T-4, ..., T+4, T+5. If the correlation factor is higher on the left side of the chart than the right, that means that "chatter" predicts/drives the market rather than reacting to it. 
+2. The second graph shows the stock price and the google searches on the same timescale. The y-axis are adjusted are adjusted to make it easier to read. This allows users to see where the correlation is coming from. Is it because the two graphs move together? Or is it because the value of the stock doesn't change and there are approximately 0 searches per day for the selected search word.
+3. The third graph shows the profits over time if one were to invest every day in this stock based on market predictions using both chatter and stock prices versus using just stock prices. Both models are Autoregression models using training data from the previous 6 months. Even if the model is accurate, the investment strategy is not meant to be a realistic one. It is only meant to show if profits can be increased using this additional "chatter" information.
 
-### Future Develupments
+### Future Developments
 As of now, the framework is already in place (things are on Github, but not Heroku) to add an option for multiple search terms and to investigate non-linear correlations between the search terms and stock price. Beyond this, I hope to include other sources of "chatter", specifically the number of distinct "Twitter Threads" and a Sentiment Analysis of comments in subreddits related to the stock. 
 
 ### Why the emphasis on Cryptocurrency?
-The methods used here easily extend to anything publicly traded such as stock or commodities. However this method works especially well on cryptocurencies for a number of reasons.
+The methods used here easily extend to anything publicly traded such as stock or commodities. However this method works especially well on cryptocurrencies for a number of reasons.
 
 1. Cryptocurrencies are usually not reflecting the value of a company or a country. Their value is based solely on the market. This means there are few hidden variables that control the price of the currency.
 
