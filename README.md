@@ -1,4 +1,5 @@
 # Stock Correlation Project
+https://cryptic-badlands-45250.herokuapp.com/
 
 ## How strong is the correlation between the Google searches of last week and the stock prices of today?
 
@@ -30,4 +31,4 @@ The methods used here easily extend to anything publicly traded such as stock or
 3. Cryptocurrencies day-traders engage in cult-like behavior. They discuss their trades freely and air their feelings for the market in several internet communities.  
 
 ### Similarities to Existing Projects
-Several research papers have been written on using the google trends, twitter, reddit, news articles, etc... to predict the market. Some investment firms most likely have developed their own algorithms which take into account "chatter". However, as far as I'm aware, there are no tools like this that are available to private day traders. This is why the emphasis of my project is on conveying the information in a concise visual manor, as opposed to a more dense though possibly more comprehensive technical read-out.  
+Several research papers (http://www.ccom.ucsd.edu/~cdeotte/papers/GoogleTrends.pdf) have been written on using the google trends, twitter, reddit, news articles, etc... to predict the market. Some investment firms most likely have developed their own algorithms which take into account "chatter". However, as far as I'm aware, there are no tools like this that are available to private day traders. This is why the emphasis of my project is on conveying the information in a concise visual manor, as opposed to a more dense though possibly more comprehensive technical read-out.  
