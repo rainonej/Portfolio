@@ -9,9 +9,9 @@ Create a website where day traders can test whether their knowledge of industry 
 
 ### Examples
 
-![GitHub Logo](DOGE-USD.png)
-
 ![GitHub Logo](ETH-USD.png)
+
+![GitHub Logo](DOGE-USD.png)
 
 ### Who are the End Users?
 Any private person who is buying and selling stocks or cryptocurrencies on the daily to several-months time-scale. Day traders who have specific knowledge of the industry they are trading in (meaning, they know the terminology) will find this tool especially useful because it can quantify the feeling of "excitement" a particular industry feels about company/stock/cryptocurrency/etc... 
