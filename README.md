@@ -2,11 +2,16 @@
 ## How strong is the correlation between the Google searches of last week and the stock prices of today?
 Visit the website to see for yourself
 https://cryptic-badlands-45250.herokuapp.com/
-
-![GitHub Logo](DOGE-USD.png)
+[Website no longer hosted properly]
 
 ### Elevator Pitch
 Create a website where day traders can test whether their knowledge of industry "chatter" can reliably be leveraged into profit. "Chatter" is a measure of public interest in a stock or cryptocurrency. Day traders are interested in knowing when and what type of "chatter" drives markets versus reacting to markets. The website will display this information in a clear way using multiple visualizations. Currently "chatter" is measured by daily Google searched for specific key words, but will incorporate metrics from Twitter, News articles, and Subreddits. 
+
+### Examples
+
+![GitHub Logo](DOGE-USD.png)
+
+![GitHub Logo](ETH-USD.png)
 
 ### Who are the End Users?
 Any private person who is buying and selling stocks or cryptocurrencies on the daily to several-months time-scale. Day traders who have specific knowledge of the industry they are trading in (meaning, they know the terminology) will find this tool especially useful because it can quantify the feeling of "excitement" a particular industry feels about company/stock/cryptocurrency/etc... 
